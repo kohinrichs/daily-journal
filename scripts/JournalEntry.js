@@ -2,14 +2,13 @@
  *  Purpose: To render a single journal entry as an
  *           HTML representation of the data
  */
-export const JournalEntryComponent = (entry) => {
+export const journalEntryHTMLConverter = (entry) => {
     return `
-    <section class="daily_entry">
-        <div class="entry__id">ID:${entry.id}</div>
-        <div class="entry__date">${entry.date}</div>
-        <div class="entry__concept">Concept: ${entry.concept}</div>
-        <div class="entry__entry">${entry.entry}</div>
-        <div class="entry__mood">Mood: ${entry.mood}</div>
+    <section class="dailyEntry" id="${entry.id}">
+        <div class="dailyEntry__date">${entry.date}</div>
+        <div class="dailyEntry__concept">Concept: ${entry.concept}</div>
+        <div class="dailyEntry__entry">${entry.entry}</div>
+        <div class="dailyEntry__mood">Mood: ${entry.mood}</div>
     </section>
     `
 }
