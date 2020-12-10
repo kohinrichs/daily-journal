@@ -4,19 +4,55 @@
  *    there are items in the collection exposed by the
  *    data provider component
  */
-import { useJournalEntries } from "./JournalDataProvider.js"
-import { JournalEntryComponent } from "./JournalEntry.js"
+import { useJournalEntries, getJournalEntries } from "./JournalDataProvider.js"
+import { journalEntryHTMLConverter } from "./JournalEntry.js"
 
-export const EntryListComponent = () => {
+const contentTarget = document.querySelector(".entryLog")
+const eventHub = document.querySelector(".container")
 
-    // DOM reference to where all entries will be rendered
-    const entryLog = document.querySelector(".entryLog")
+eventHub.addEventListener("journalStateChanged", () => {
+    journalEntryList()
+})
 
-    // Use the journal entry data from the data provider component
-    const entries = useJournalEntries()
+// to Reset Form (something Is not Working with this)
 
-    for (const entry of entries) {
-       const entryHTML = JournalEntryComponent(entry)
-        entryLog.innerHTML += entryHTML
-    }
+eventHub.addEventListener("resetForm", () => {
+    document.querySelector("#journalDate").value = ""
+    document.querySelector("#journalConcepts").value = ""
+    document.querySelector("#journalEntry").value = ""
+    document.querySelector("#moodForTheDay").value = ""
+    })
+
+
+const render = (journalEntryArray) => {
+    const allEntriesConvertedToStrings = journalEntryArray.map(
+        (journalEntry) => {
+            return journalEntryHTMLConverter(journalEntry)
+        }
+    ).join("")
+    contentTarget.innerHTML = allEntriesConvertedToStrings
 }
+
+export const journalEntryList = () => {
+    getJournalEntries().then(() => {
+        const allEntries = useJournalEntries()
+        render(allEntries)
+    })
+}
+
+// Render ALL Journal Entries initially
+
+// OLD CODE
+// export const EntryListComponent = () => {
+
+//     // DOM reference to where all entries will be rendered
+//     const entryLog = document.querySelector(".entryLog")
+
+//     // Use the journal entry data from the data provider component
+//     const entries = useJournalEntries()
+
+//     for (const entry of entries) {
+//        const entryHTML = JournalEntryComponent(entry)
+//         entryLog.innerHTML += entryHTML
+//     }
+// }

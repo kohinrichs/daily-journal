@@ -6,47 +6,46 @@
  *      the entries for different purposes.
  */
 
-// This is the original data.
-const journal = [
-    {
-        id: 1,
-        date: "11/9/2020",
-        concept: "Orientation",
-        entry: "We learned more about our machines and installed some of the programs we need to be successful in this course.",
-        mood: "Anxious" 
-    },
-    {
-        id: 2,
-        date: "11/11/2020",
-        concept: "HTML & CSS",
-        entry: "We talked about HTML components and how to make grid layouts with Flexbox in CSS.",
-        mood: "Ok"
-    },
-    {
-        id: 3,
-        date: "11/19/2020",
-        concept: "Javascript",
-        entry: "We learned about using Javascript to create the HTML for our web applications.",
-        mood: "Excited" 
-    },
-    
-    // {
-    //     id: ,
-    //     date: "",
-    //     concept: "",
-    //     entry: ".",
-    //     mood: "" 
-    // },
-]
+const eventHub = document.querySelector(".container")
+
+let journal = []
+
+export const useJournalEntries = () => journal.slice()
+
+const dispatchStateChangeEvent = () => {
+    eventHub.dispatchEvent(new CustomEvent("journalStateChanged"))
+}
+
+export const getJournalEntries = () => {
+    return fetch("http://localhost:8088/entries") // Fetch from the API
+        .then(response => response.json())  // Parse as JSON
+        .then(parsedEntries => {
+            // What should happen when we finally have the array?
+            journal = parsedEntries
+        })
+}
+
+export const saveJournalEntry = journalEntry => {
+    // Use `fetch` with the POST method to add your entry to your API
+    return fetch("http://localhost:8088/entries", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(journalEntry)
+    })
+        .then(getJournalEntries)
+        .then(dispatchStateChangeEvent)
+}
 
 /*
     You export a function that provides a version of the
     raw data in the format that you want
 */
-export const useJournalEntries = () => {
-    const sortedByDate = journal.sort(
-        (currentEntry, nextEntry) =>
-            Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
-    )
-    return sortedByDate
-}
+// export const useJournalEntries = () => {
+//     const sortedByDate = journal.sort(
+//         (currentEntry, nextEntry) =>
+//             Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
+//     )
+//     return sortedByDate
+// }
