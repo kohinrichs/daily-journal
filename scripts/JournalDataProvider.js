@@ -47,6 +47,14 @@ export const saveJournalEntry = journalEntry => {
         .then(dispatchStateChangeEvent)
 }
 
+// Method to DELETE entries
+export const deleteEntry = entryId => {
+    return fetch(`http://localhost:8088/entries/${entryId}`, {
+        method: "DELETE"
+    })
+        .then(getJournalEntries)
+        .then(dispatchStateChangeEvent)
+}
 
     // You export a function that provides a version of the
     // // raw data in the format that you want

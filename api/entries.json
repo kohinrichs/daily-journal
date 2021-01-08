@@ -4,22 +4,37 @@
       "date": "11/9/2020",
       "concept": "Orientation",
       "entry": "We learned more about our machines and installed some of the programs we will need to be successful in this course.",
-      "mood": "Anxious",
+      "moodId": 1,
       "id": 1
     },
     {
       "date": "2021-01-08",
       "concept": "json",
       "entry": "rough",
-      "mood": "excited",
+      "moodId": 2,
       "id": 2
+    }
+  ],
+  "mood": [
+    {
+      "id": 1,
+      "label": "Anxious"
     },
     {
-      "date": "2021-01-11",
-      "concept": "testing ",
-      "entry": "lrgjs l",
-      "mood": "cheerful",
-      "id": 3
+      "id": 2,
+      "label": "Excited"
+    },
+    {
+      "id": 3,
+      "label": "Cheerful"
+    },
+    {
+      "id": 4,
+      "label": "Optimistic"
+    },
+    {
+      "id": 5,
+      "label": "Sad"
     }
   ]
 }

@@ -1,11 +1,6 @@
-/*
- *  Purpose:
- *    To render as many journal entry components as
- *    there are items in the collection exposed by the
- *    data provider component
- */
-import { useJournalEntries, getJournalEntries } from "./JournalDataProvider.js"
+import { useJournalEntries, getJournalEntries, deleteEntry } from "./JournalDataProvider.js"
 import { journalEntryHTMLConverter } from "./JournalEntry.js"
+import { getMoods, useMoods } from "./MoodProvider.js"
 
 const contentTarget = document.querySelector(".entryLog")
 const eventHub = document.querySelector(".container")
@@ -15,18 +10,35 @@ eventHub.addEventListener("journalStateChanged", () => {
 })
 
 export const journalEntryList = () => {
-    getJournalEntries().then(() => {
+    getMoods()
+        .then(() => {
+        let mood = useMoods()
+        
+        getJournalEntries()
+        .then(() => {
         const allEntries = useJournalEntries()
-        render(allEntries)
+        render(allEntries, mood)
     })
+        }
+    )
+
+  
 }
 
-const render = (journalEntryArray) => {
+const render = (journalEntryArray, moods) => {
     const allEntriesConvertedToStrings = journalEntryArray.map(
         (journalEntry) => {
+            const associatedMood = moods.find(
+                (mood) => {
+                    return mood.id === journalEntry.moodId
+                }
+            )
+            journalEntry.moodName = associatedMood
+
             return journalEntryHTMLConverter(journalEntry)
         }
     ).join("")
+
     contentTarget.innerHTML = allEntriesConvertedToStrings
 }
 
@@ -38,7 +50,15 @@ eventHub.addEventListener("resetForm", () => {
     document.querySelector("#moodForTheDay").value = ""
     })
 
+// New Event Listener for DELETING notes
+eventHub.addEventListener("click", clickEvent => {
+    debugger
+    if (clickEvent.target.id.startsWith("deleteEntry--")) {
+        const [prefix, entryId] = clickEvent.target.id.split("--")
 
+        deleteEntry(entryId)
+    }
+})
 
 // Render ALL Journal Entries initially
 
