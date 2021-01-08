@@ -6,6 +6,20 @@
       "entry": "We learned more about our machines and installed some of the programs we will need to be successful in this course.",
       "mood": "Anxious",
       "id": 1
+    },
+    {
+      "date": "2021-01-08",
+      "concept": "json",
+      "entry": "rough",
+      "mood": "excited",
+      "id": 2
+    },
+    {
+      "date": "2021-01-11",
+      "concept": "testing ",
+      "entry": "lrgjs l",
+      "mood": "cheerful",
+      "id": 3
     }
   ]
 }

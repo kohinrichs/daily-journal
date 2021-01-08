@@ -1,13 +1,10 @@
 import { JournalForm } from './JournalForm.js';
 
-import "./JournalEntryList.js"
-import { journalEntryList } from './JournalEntryList.js';
-
-
-
+import { journalEntryList } from "./JournalEntryList.js"
 
 JournalForm();
 journalEntryList();
+
 
 
 

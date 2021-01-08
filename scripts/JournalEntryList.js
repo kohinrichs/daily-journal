@@ -14,15 +14,12 @@ eventHub.addEventListener("journalStateChanged", () => {
     journalEntryList()
 })
 
-// to Reset Form (something Is not Working with this)
-
-eventHub.addEventListener("resetForm", () => {
-    document.querySelector("#journalDate").value = ""
-    document.querySelector("#journalConcepts").value = ""
-    document.querySelector("#journalEntry").value = ""
-    document.querySelector("#moodForTheDay").value = ""
+export const journalEntryList = () => {
+    getJournalEntries().then(() => {
+        const allEntries = useJournalEntries()
+        render(allEntries)
     })
-
+}
 
 const render = (journalEntryArray) => {
     const allEntriesConvertedToStrings = journalEntryArray.map(
@@ -33,12 +30,15 @@ const render = (journalEntryArray) => {
     contentTarget.innerHTML = allEntriesConvertedToStrings
 }
 
-export const journalEntryList = () => {
-    getJournalEntries().then(() => {
-        const allEntries = useJournalEntries()
-        render(allEntries)
+// To reset form after the save button has been clicked
+eventHub.addEventListener("resetForm", () => {
+    document.querySelector("#journalDate").value = ""
+    document.querySelector("#journalConcepts").value = ""
+    document.querySelector("#journalEntry").value = ""
+    document.querySelector("#moodForTheDay").value = ""
     })
-}
+
+
 
 // Render ALL Journal Entries initially
 

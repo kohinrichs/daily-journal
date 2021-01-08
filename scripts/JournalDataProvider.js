@@ -10,7 +10,16 @@ const eventHub = document.querySelector(".container")
 
 let journal = []
 
-export const useJournalEntries = () => journal.slice()
+
+export const useJournalEntries = () => {
+    const sortedByDate = journal.sort(
+        (currentEntry, nextEntry) =>
+            Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
+    )
+    return sortedByDate
+}
+
+// export const useJournalEntries = () => journal.slice()
 
 const dispatchStateChangeEvent = () => {
     eventHub.dispatchEvent(new CustomEvent("journalStateChanged"))
@@ -38,14 +47,6 @@ export const saveJournalEntry = journalEntry => {
         .then(dispatchStateChangeEvent)
 }
 
-/*
-    You export a function that provides a version of the
-    raw data in the format that you want
-*/
-// export const useJournalEntries = () => {
-//     const sortedByDate = journal.sort(
-//         (currentEntry, nextEntry) =>
-//             Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
-//     )
-//     return sortedByDate
-// }
+
+    // You export a function that provides a version of the
+    // // raw data in the format that you want

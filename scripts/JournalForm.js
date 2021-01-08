@@ -5,7 +5,6 @@ const eventHub = document.querySelector(".container")
 
 eventHub.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === "submitJournalEntry") {
-        debugger
         let date = document.querySelector("#journalDate").value
         let concept = document.querySelector("#journalConcepts").value
         let entry = document.querySelector("#journalEntry").value
