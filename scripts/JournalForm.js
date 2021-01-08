@@ -1,11 +1,11 @@
 import { saveJournalEntry } from "./JournalDataProvider.js"
+import { getMoods, useMoods } from "./MoodProvider.js"
 
 const contentTarget = document.querySelector(".journal__form")
 const eventHub = document.querySelector(".container")
 
 eventHub.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === "submitJournalEntry") {
-        debugger
         let date = document.querySelector("#journalDate").value
         let concept = document.querySelector("#journalConcepts").value
         let entry = document.querySelector("#journalEntry").value
@@ -35,8 +35,13 @@ eventHub.addEventListener("click", clickEvent => {
     })
 
 const render = () => {
+   
+    getMoods()
+        .then(() => {
+        let allMoods = useMoods()
+        
     contentTarget.innerHTML = `
-        <form action = "">
+        <div id="journal__Form">
             <!-- Journal Date -->
                 <fieldset>
                     <label for="journalDate">Date of Entry</label>
@@ -55,19 +60,22 @@ const render = () => {
             <!-- Mood Selector -->
                <fieldset>
                     <label for="moodForTheDay">Mood For The Day:</label>
-                        <select id="moodForTheDay">
-                            <option value="">--Please choose and option--</option>
-                            <option value="anxious">Anxious</option>
-                            <option value="excited">Excited</option>
-                            <option value="cheerful">Cheerful</option>
-                            <option value="optimistic">Optimistic</option>
-                            <option value="sad">Sad</option>
+                        <select class= "dropdown" id="moodForTheDay">
+                            <option value="0">Please select a mood...</option>
+                            ${
+                                allMoods.map((mood) =>
+                                    `<option value="${mood.id}">
+                                        ${mood.label}
+                                    </option>`
+                                )
+                            }
                         </select>
                 </fieldset>
             <!-- Submit button. -->
             <button type="button" id="submitJournalEntry">Submit Journal Entry</button>
-        </form>
+        </div>
     `
+    })
 }
 
 export const JournalForm = () => {

@@ -33,3 +33,11 @@ h1,h2,h3,h4,h5,h6 {
 	display: flex;
 	flex-direction: column;
 }
+.entryLog {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+
+
+}
