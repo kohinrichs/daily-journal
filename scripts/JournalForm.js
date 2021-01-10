@@ -9,13 +9,13 @@ eventHub.addEventListener("click", clickEvent => {
         let date = document.querySelector("#journalDate").value
         let concept = document.querySelector("#journalConcepts").value
         let entry = document.querySelector("#journalEntry").value
-        let mood = document.querySelector("#moodForTheDay").value
+        let mood = parseInt(document.querySelector("#moodForTheDay").value)
 
         const newJournalEntry = {
             date: date,
             concept: concept,
             entry: entry,
-            mood: mood
+            moodId: mood
         }
     
         saveJournalEntry(newJournalEntry)
