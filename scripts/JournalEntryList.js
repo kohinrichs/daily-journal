@@ -50,9 +50,22 @@ eventHub.addEventListener("resetForm", () => {
     document.querySelector("#moodForTheDay").value = ""
     })
 
-// New Event Listener for DELETING notes
+// New Event Listen for FILTERING entries by mood
+eventHub.addEventListener("moodChosen", event => {
+    if (event.target.moodThatWasChosen !== "0") {
+
+        const moods = useMoods()
+        const mood = moods.find((mood) => mood.id === parseInt(event.detail.moodThatWasChosen))
+      
+        const entries = useJournalEntries()
+        const matchingEntries = entries.filter( (entry) => entry.moodId === mood.id)
+
+        render(matchingEntries, moods)
+    }
+})
+
+// New Event Listener for DELETING journal entries
 eventHub.addEventListener("click", clickEvent => {
-    debugger
     if (clickEvent.target.id.startsWith("deleteEntry--")) {
         const [prefix, entryId] = clickEvent.target.id.split("--")
 

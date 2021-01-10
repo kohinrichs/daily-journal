@@ -1,7 +1,9 @@
 import { JournalForm } from './JournalForm.js';
 import { journalEntryList } from "./JournalEntryList.js"
+import { FilterBar } from './FilterBar.js';
 
 JournalForm();
+FilterBar();
 journalEntryList();
 
 
